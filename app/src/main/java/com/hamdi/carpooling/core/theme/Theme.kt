@@ -1,6 +1,5 @@
-package com.hamdi.carpooling.ui.theme
+package com.hamdi.carpooling.core.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
