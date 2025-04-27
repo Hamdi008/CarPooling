@@ -64,7 +64,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     // Dagger Hilt
-    implementation(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
     implementation(libs.hilt.android)
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation(libs.androidx.animation.core.lint)
