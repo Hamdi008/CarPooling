@@ -1,5 +1,6 @@
 package com.hamdi.carpooling.features.auth.signup.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,14 +21,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.core.theme.CarPoolingTheme
+import com.hamdi.carpooling.dataBase.roomDB.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(viewModel: UserViewModel = hiltViewModel()) {
     val navController = LocalNavController.current
+    val users = viewModel.users.value
+    Log.d("HEL:","users = $users")
 
     // State variables
     var name by remember { mutableStateOf("") }
