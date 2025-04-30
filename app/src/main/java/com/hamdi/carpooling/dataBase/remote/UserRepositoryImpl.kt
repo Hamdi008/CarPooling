@@ -13,17 +13,13 @@ class UserRepositoryImpl @Inject constructor(
     private val db: AppDatabase
 ) : UserRepository, RoomUserRepository {
 
-    override suspend fun fetchRemoteUsers() {
+    override suspend fun fetchAndStoreRemoteUsers() {
         val usersFromApi = api.getUsers()
-        Log.d("HEL:","usersFromApi = $usersFromApi")
+        Log.d("HEL:","Remote Users = $usersFromApi")
         withContext(Dispatchers.IO){
             db.userDao().insertRoomUsers(usersFromApi)
         }
     }
-
-//    override suspend fun getRoomUsers(): List<User> {
-//        return getAllUsers()
-//    }
 
     override suspend fun insertRoomUser(user: User) {
         withContext(Dispatchers.IO) {

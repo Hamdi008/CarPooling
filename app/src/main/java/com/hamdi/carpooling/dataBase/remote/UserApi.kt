@@ -4,6 +4,6 @@ import com.hamdi.carpooling.dataBase.roomDB.User
 import retrofit2.http.GET
 
 interface UserApi {
-    @GET("users") // 🛠️ Adjust endpoint if needed
+    @GET("users")
     suspend fun getUsers(): List<User>
 }

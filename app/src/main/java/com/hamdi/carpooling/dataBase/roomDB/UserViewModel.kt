@@ -19,15 +19,16 @@ class UserViewModel @Inject constructor(
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
-    private fun fetchRemoteUsers() {
+    private fun fetchAndStoreRemoteUsers() {
         viewModelScope.launch {
-            repository.fetchRemoteUsers()
+            repository.fetchAndStoreRemoteUsers()
             _users.value = roomRepository.getAllRoomUsers()
+            Log.d("HEL:","All Room Users = ${_users.value}")
         }
     }
 
     init {
         Log.d("HEL:","UserViewModel init")
-        fetchRemoteUsers()
+        fetchAndStoreRemoteUsers()
     }
 }
