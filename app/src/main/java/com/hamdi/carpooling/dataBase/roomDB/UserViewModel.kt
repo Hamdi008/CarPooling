@@ -12,21 +12,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    private val repository: UserRepository
+    private val repository: UserRepository,
+    private val roomRepository: RoomUserRepository
 ) : ViewModel() {
 
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
-    private fun loadUsers() {
+    private fun fetchRemoteUsers() {
         viewModelScope.launch {
-            repository.refreshUsers()
-            _users.value = repository.getUsersFromDb()
+            repository.fetchRemoteUsers()
+            _users.value = roomRepository.getAllRoomUsers()
         }
     }
 
     init {
         Log.d("HEL:","UserViewModel init")
-        loadUsers()
+        fetchRemoteUsers()
     }
 }

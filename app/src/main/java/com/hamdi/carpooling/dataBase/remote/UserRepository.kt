@@ -4,7 +4,7 @@ import com.hamdi.carpooling.dataBase.roomDB.User
 
 interface UserRepository {
 
-    suspend fun refreshUsers()
+    suspend fun fetchRemoteUsers()
 
-    suspend fun getUsersFromDb(): List<User>
+//    suspend fun getRoomUsers(): List<User>
 }

@@ -21,7 +21,7 @@ object NetworkModule {
         Log.d("HEL:","provide Retrofit")
 
         return Retrofit.Builder()
-            .baseUrl("http://192.168.254.162:9000/") // 🛠 Replace with your base URL
+            .baseUrl("http://192.168.254.190:9000/") // 🛠 Replace with your base URL
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
