@@ -26,13 +26,12 @@ import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.core.theme.CarPoolingTheme
 import com.hamdi.carpooling.dataBase.roomDB.UserViewModel
+import com.hamdi.carpooling.features.auth.signup.presentation.RegisterViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(viewModel: UserViewModel = hiltViewModel()) {
+fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel()) {
     val navController = LocalNavController.current
-    val users = viewModel.users.value
-    Log.d("HEL:","users = $users")
 
     // State variables
     var name by remember { mutableStateOf("") }
@@ -170,7 +169,20 @@ fun SignUpScreen(viewModel: UserViewModel = hiltViewModel()) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Button(
-                    onClick = { /* Handle sign up */ },
+                    onClick = {
+                        viewModel.registerUser(
+                            name = name,
+                            email = email,
+                            password = password,
+                            onSuccess = {
+                                //navController.navigate(...)
+                                Log.d("HEL:", "Register success")
+                            },
+                            onError = { error ->
+                                Log.d("HEL:", "Register error: $error")
+                            }
+                        )
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),

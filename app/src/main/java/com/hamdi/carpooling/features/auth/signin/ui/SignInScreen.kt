@@ -1,5 +1,6 @@
 package com.hamdi.carpooling.features.auth.signin.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -138,7 +139,19 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(
-                        onClick = { /* Handle sign in */ },
+                        onClick = {
+                            viewModel.login(
+                                email = email,
+                                password = password,
+                                onSuccess = {
+                                    //navController.navigate(...)
+                                    Log.d("HEL:", "Login success")
+                                },
+                                onError = { error ->
+                                    Log.d("HEL:", "Login error: $error")
+                                }
+                            )
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp),

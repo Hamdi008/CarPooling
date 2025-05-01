@@ -8,13 +8,15 @@ import com.hamdi.carpooling.features.auth.signin.domain.AuthRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import androidx.core.content.edit
+import com.hamdi.carpooling.features.auth.signin.data.model.LoginResponse
+import retrofit2.Response
 
 class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi,
     @ApplicationContext private val context: Context
 ) : AuthRepository {
 
-    override suspend fun login(request: LoginRequest): String {
+    override suspend fun login(request: LoginRequest): Response<LoginResponse> {
 
         val response = authApi.login(request)
         var jwt = ""
@@ -29,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
         } else {
             Log.e("HEL:", "Invalid credentials: ${response.code()}")
         }
-        return jwt
+        return response
     }
 
     override suspend fun getProfile() {
