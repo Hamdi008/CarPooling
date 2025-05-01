@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: HomeRepository
+    private val homeRepository: HomeRepository
 ) : ViewModel() {
 
     var homeMessage = mutableStateOf("Loading...")
@@ -19,9 +19,9 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            Log.d("HEL:","HomeViewModel init")
+            Log.d("HEL:", "HomeViewModel init")
 
-            homeMessage.value = repository.getHomeData()
+            homeMessage.value = homeRepository.getHomeData()
         }
     }
 }

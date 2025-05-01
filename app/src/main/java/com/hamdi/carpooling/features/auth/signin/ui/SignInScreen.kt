@@ -19,13 +19,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
 import com.hamdi.carpooling.core.theme.CarPoolingTheme
+import com.hamdi.carpooling.features.auth.signin.presentation.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen() {
+fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
     val navController = LocalNavController.current
 
     // State variables

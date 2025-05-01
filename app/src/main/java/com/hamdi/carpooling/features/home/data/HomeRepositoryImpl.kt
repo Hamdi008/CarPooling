@@ -6,14 +6,14 @@ import com.hamdi.carpooling.features.home.domain.HomeRepository
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
-    private val api: HomeApi
+    private val homeApi: HomeApi
 ) : HomeRepository {
 
     override suspend fun getHomeData(): String {
 
         Log.d("HEL:","HomeRepositoryImpl getHomeData")
         return try {
-            val response = api.getHomeMessage()
+            val response = homeApi.getHomeMessage()
             if (response.isSuccessful) {
                 response.body()?.homeMessage ?: "No message"
             } else {

@@ -2,6 +2,7 @@ package com.hamdi.carpooling.di
 
 import android.util.Log
 import com.hamdi.carpooling.dataBase.remote.UserApi
+import com.hamdi.carpooling.features.auth.signin.data.remote.AuthApi
 import com.hamdi.carpooling.features.home.data.remote.HomeApi
 import dagger.Module
 import dagger.Provides
@@ -38,5 +39,12 @@ object NetworkModule {
     fun provideUserApi(retrofit: Retrofit): UserApi {
         Log.d("HEL:","provide UserApi")
         return retrofit.create(UserApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): AuthApi {
+        Log.d("HEL:","provide AuthApi")
+        return retrofit.create(AuthApi::class.java)
     }
 }
