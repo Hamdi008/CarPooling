@@ -1,6 +1,7 @@
 package com.hamdi.carpooling.features.auth.signin.data
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import com.hamdi.carpooling.features.auth.signin.data.model.LoginRequest
 import com.hamdi.carpooling.features.auth.signin.data.remote.AuthApi
@@ -13,6 +14,7 @@ import retrofit2.Response
 
 class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi,
+    private val sharedPreferences: SharedPreferences,
     @ApplicationContext private val context: Context
 ) : AuthRepository {
 
@@ -26,8 +28,7 @@ class AuthRepositoryImpl @Inject constructor(
             Log.e("HEL:", "jwt: $jwt")
 
             // Store JWT in SharedPreferences
-            val prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-            prefs.edit() { putString("jwt", jwt) }
+            sharedPreferences.edit() { putString("jwt_token", "Bearer $jwt") }
         } else {
             Log.e("HEL:", "Invalid credentials: ${response.code()}")
         }
@@ -35,8 +36,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getProfile() {
-        val prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val jwt = prefs.getString("jwt", null)
+        val jwt = sharedPreferences.getString("jwt_token", null)
 
         if (jwt != null) {
             val profileResponse = authApi.getProfile("Bearer $jwt")
