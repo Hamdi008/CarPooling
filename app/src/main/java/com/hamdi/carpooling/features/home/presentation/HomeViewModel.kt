@@ -19,8 +19,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            Log.d("HEL:", "HomeViewModel init")
-
             homeMessage.value = homeRepository.getHomeData()
         }
     }

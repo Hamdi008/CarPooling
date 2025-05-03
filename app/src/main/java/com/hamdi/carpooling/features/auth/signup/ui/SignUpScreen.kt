@@ -176,10 +176,8 @@ fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel()) {
                             password = password,
                             onSuccess = {
                                 //navController.navigate(...)
-                                Log.d("HEL:", "Register success")
                             },
                             onError = { error ->
-                                Log.d("HEL:", "Register error: $error")
                             }
                         )
                     },

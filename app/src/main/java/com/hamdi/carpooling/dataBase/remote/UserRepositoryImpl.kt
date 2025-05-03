@@ -15,7 +15,6 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun fetchAndStoreRemoteUsers() {
         val usersFromApi = api.getUsers()
-        Log.d("HEL:","Remote Users = $usersFromApi")
         withContext(Dispatchers.IO){
             db.userDao().insertRoomUsers(usersFromApi)
         }

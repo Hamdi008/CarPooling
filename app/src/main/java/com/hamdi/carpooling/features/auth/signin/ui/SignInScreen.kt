@@ -145,10 +145,8 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
                                 password = password,
                                 onSuccess = {
                                     //navController.navigate(...)
-                                    Log.d("HEL:", "Login success")
                                 },
                                 onError = { error ->
-                                    Log.d("HEL:", "Login error: $error")
                                 }
                             )
                         },

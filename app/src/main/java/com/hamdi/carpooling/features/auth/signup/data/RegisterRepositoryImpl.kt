@@ -11,15 +11,8 @@ import javax.inject.Inject
 class RegisterRepositoryImpl @Inject constructor(
     private val registerApi: RegisterApi
 ): RegisterRepository {
-    override suspend fun register(request: RegisterRequest): Response<RegisterResponse> {
-        val response = registerApi.register(request)
 
-        if (response.isSuccessful) {
-            val result = response.body()
-            Log.d("HEL:",  " RegisterSuccess: ${result?.message}")
-        } else {
-            Log.e("HEL:", "Register Failed: ${response.code()} - ${response.errorBody()?.string()}")
-        }
-        return response
+    override suspend fun register(request: RegisterRequest): Response<RegisterResponse> {
+        return registerApi.register(request)
     }
 }

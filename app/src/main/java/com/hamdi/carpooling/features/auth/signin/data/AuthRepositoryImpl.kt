@@ -3,14 +3,15 @@ package com.hamdi.carpooling.features.auth.signin.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 import com.hamdi.carpooling.features.auth.signin.data.model.LoginRequest
+import com.hamdi.carpooling.features.auth.signin.data.model.LoginResponse
+import com.hamdi.carpooling.features.auth.signin.data.model.ProfileResponse
 import com.hamdi.carpooling.features.auth.signin.data.remote.AuthApi
 import com.hamdi.carpooling.features.auth.signin.domain.AuthRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
-import androidx.core.content.edit
-import com.hamdi.carpooling.features.auth.signin.data.model.LoginResponse
 import retrofit2.Response
+import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi,
@@ -25,30 +26,27 @@ class AuthRepositoryImpl @Inject constructor(
 
         if (response.isSuccessful) {
             jwt = response.body()?.token ?: ""
-            Log.e("HEL:", "jwt: $jwt")
 
             // Store JWT in SharedPreferences
-            sharedPreferences.edit() { putString("jwt_token", "Bearer $jwt") }
-        } else {
-            Log.e("HEL:", "Invalid credentials: ${response.code()}")
+            sharedPreferences.edit() { putString("jwt_token", jwt) }
         }
         return response
     }
 
-    override suspend fun getProfile() {
+    override suspend fun getProfile(): Response<ProfileResponse> {
         val jwt = sharedPreferences.getString("jwt_token", null)
 
-        if (jwt != null) {
-            val profileResponse = authApi.getProfile("Bearer $jwt")
-            if (profileResponse.isSuccessful) {
-                val profile = profileResponse.body()
-                // Display user info
-                Log.e("HEL:", "getProfile: profile = $profile")
-
-            } else {
-                Log.e("HEL:", "getProfile: Unauthorized or expired token")
-            }
+        return if (jwt != null) {
+            authApi.getProfile("Bearer $jwt")
+        } else {
+            Response.error(
+                401,
+                okhttp3.ResponseBody.create(
+                    okhttp3.MediaType.parse("application/json"),
+                    "{\"message\":\"JWT missing\"}"
+                )
+            )
         }
-
     }
+
 }

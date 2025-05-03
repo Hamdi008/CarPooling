@@ -21,23 +21,23 @@ class AuthViewModel @Inject constructor(
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ){
-        Log.d("HEL:"," data from SignIn Screen: email = $email ; password = $password")
         viewModelScope.launch {
             try {
                 val response = authRepository.login(
                  request = LoginRequest(email = email, password = password)
                 )
                 if (response.isSuccessful) {
-                    Log.d(
-                        "HEL:",
-                        "login successful: ${response.body()?.token}"
-                    )
-                    //onSuccess()
-                    authRepository.getProfile()
-                    onSuccess()
+                    val getProfileResponse = authRepository.getProfile()
+                    if (getProfileResponse.isSuccessful) {
+                        Log.d("HEL:","Login Success")
+                        onSuccess()
+                    } else {
+                        Log.d("HEL:","Login Failed}")
+                        onError(getProfileResponse.message())
+                    }
                 } else {
                     val errorMessage = response.errorBody()?.string() ?: "Unknown error"
-                    Log.e("HEL:", "login failed: $errorMessage")
+                    Log.e("HEL:", "Login Failed: $errorMessage")
                     onError(errorMessage)
                 }
             } catch (e: Exception) {

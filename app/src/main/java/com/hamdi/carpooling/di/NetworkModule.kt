@@ -40,7 +40,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
-        Log.d("HEL:","provide Retrofit")
 
         return Retrofit.Builder()
             .baseUrl("http://192.168.254.190:9000/") // 🛠 Replace with your base URL
@@ -52,28 +51,24 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideHomeApi(retrofit: Retrofit): HomeApi {
-        Log.d("HEL:","provide HomeApi")
         return retrofit.create(HomeApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi {
-        Log.d("HEL:","provide UserApi")
         return retrofit.create(UserApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideAuthApi(retrofit: Retrofit): AuthApi {
-        Log.d("HEL:","provide AuthApi")
         return retrofit.create(AuthApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideRegisterApi(retrofit: Retrofit): RegisterApi {
-        Log.d("HEL:","provide RegisterApi")
         return retrofit.create(RegisterApi::class.java)
     }
 }

@@ -23,7 +23,6 @@ class RegisterViewModel @Inject constructor(
         onError: (String) -> Unit
     ) {
 
-        Log.d("HEL:"," data from SignUp Screen: name = $name ; email = $email ; password = $password")
         viewModelScope.launch {
             try {
                 val response = registerRepository.register(
@@ -34,18 +33,12 @@ class RegisterViewModel @Inject constructor(
                     )
                 )
                 if (response.isSuccessful) {
-                    Log.d(
-                        "HEL:",
-                        "Registration successful: ${response.body()?.message}"
-                    )
                     onSuccess()
                 } else {
                     val errorMessage = response.errorBody()?.string() ?: "Unknown error"
-                    Log.e("HEL:", "Registration failed: $errorMessage")
                     onError(errorMessage)
                 }
             } catch (e: Exception) {
-                Log.e("HEL:", "Exception: ${e.message}")
                 onError(e.message ?: "Unexpected error")
             }
         }

@@ -28,7 +28,6 @@ import com.hamdi.carpooling.features.home.presentation.HomeViewModel
 fun HomeScreen(modifier: Modifier, viewModel: HomeViewModel = hiltViewModel()) {
     val navController = LocalNavController.current
     val msg = viewModel.homeMessage.value
-    Log.d("HEL:","msg = $msg")
 
     Box(
         modifier = modifier

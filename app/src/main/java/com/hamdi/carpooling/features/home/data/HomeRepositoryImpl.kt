@@ -11,7 +11,6 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun getHomeData(): String {
 
-        Log.d("HEL:","HomeRepositoryImpl getHomeData")
         return try {
             val response = homeApi.getHomeMessage()
             if (response.isSuccessful) {
