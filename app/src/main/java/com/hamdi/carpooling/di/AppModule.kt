@@ -3,6 +3,8 @@ package com.hamdi.carpooling.di
 import com.hamdi.carpooling.dataBase.remote.UserRepository
 import com.hamdi.carpooling.dataBase.remote.UserRepositoryImpl
 import com.hamdi.carpooling.dataBase.roomDB.RoomUserRepository
+import com.hamdi.carpooling.features.auth.logout.data.LogoutRepositoryImpl
+import com.hamdi.carpooling.features.auth.logout.domain.LogoutRepository
 import com.hamdi.carpooling.features.auth.signin.data.AuthRepositoryImpl
 import com.hamdi.carpooling.features.auth.signin.domain.AuthRepository
 import com.hamdi.carpooling.features.auth.signup.data.RegisterRepositoryImpl
@@ -48,4 +50,10 @@ abstract class AppModule {
     abstract fun bindRegisterRepository(
         impl: RegisterRepositoryImpl
     ): RegisterRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindLogoutRepository(
+        impl: LogoutRepositoryImpl
+    ): LogoutRepository
 }

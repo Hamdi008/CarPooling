@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.hamdi.carpooling.dataBase.remote.UserApi
+import com.hamdi.carpooling.features.auth.logout.data.remote.LogoutApi
 import com.hamdi.carpooling.features.auth.signin.data.AuthInterceptor
 import com.hamdi.carpooling.features.auth.signin.data.remote.AuthApi
 import com.hamdi.carpooling.features.auth.signup.data.remote.RegisterApi
@@ -70,5 +71,11 @@ object NetworkModule {
     @Singleton
     fun provideRegisterApi(retrofit: Retrofit): RegisterApi {
         return retrofit.create(RegisterApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogoutApi(retrofit: Retrofit): LogoutApi {
+        return retrofit.create(LogoutApi::class.java)
     }
 }
