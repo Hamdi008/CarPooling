@@ -1,6 +1,5 @@
-package com.hamdi.carpooling.features.home.ui
+package com.hamdi.carpooling.features.welcome.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,12 +21,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
-import com.hamdi.carpooling.features.home.presentation.HomeViewModel
+import com.hamdi.carpooling.features.welcome.presentation.WelcomeViewModel
 
 @Composable
-fun HomeScreen(modifier: Modifier, viewModel: HomeViewModel = hiltViewModel()) {
+fun WelcomeScreen(modifier: Modifier, viewModel: WelcomeViewModel = hiltViewModel()) {
     val navController = LocalNavController.current
-    val msg = viewModel.homeMessage.value
+    val msg = viewModel.welcomeMessage.value
 
     Box(
         modifier = modifier
@@ -75,6 +74,6 @@ fun HomeScreen(modifier: Modifier, viewModel: HomeViewModel = hiltViewModel()) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewHomeScreen() {
-    HomeScreen(modifier = Modifier, viewModel = hiltViewModel())
+fun PreviewWelcomeScreen() {
+    WelcomeScreen(modifier = Modifier, viewModel = hiltViewModel())
 }

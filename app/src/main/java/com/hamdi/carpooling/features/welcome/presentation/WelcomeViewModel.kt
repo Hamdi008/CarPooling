@@ -1,25 +1,24 @@
-package com.hamdi.carpooling.features.home.presentation
+package com.hamdi.carpooling.features.welcome.presentation
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hamdi.carpooling.features.home.domain.HomeRepository
+import com.hamdi.carpooling.features.welcome.domain.WelcomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+class WelcomeViewModel @Inject constructor(
+    private val welcomeRepository: WelcomeRepository
 ) : ViewModel() {
 
-    var homeMessage = mutableStateOf("Loading...")
+    var welcomeMessage = mutableStateOf("Loading...")
         private set
 
     init {
         viewModelScope.launch {
-            homeMessage.value = homeRepository.getHomeData()
+            welcomeMessage.value = welcomeRepository.getWelcomeData()
         }
     }
 }

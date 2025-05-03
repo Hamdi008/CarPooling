@@ -9,7 +9,7 @@ import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
 import com.hamdi.carpooling.features.auth.signin.ui.SignInScreen
 import com.hamdi.carpooling.features.auth.signup.ui.SignUpScreen
-import com.hamdi.carpooling.features.home.ui.HomeScreen
+import com.hamdi.carpooling.features.welcome.ui.WelcomeScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier) {
@@ -18,7 +18,7 @@ fun AppNavigation(modifier: Modifier) {
         startDestination = HOME
     ) {
         composable(HOME) {
-            HomeScreen(modifier = modifier)
+            WelcomeScreen(modifier = modifier)
         }
         composable(SIGN_UP) {
             SignUpScreen()

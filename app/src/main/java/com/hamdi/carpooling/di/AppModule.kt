@@ -9,8 +9,8 @@ import com.hamdi.carpooling.features.auth.signin.data.AuthRepositoryImpl
 import com.hamdi.carpooling.features.auth.signin.domain.AuthRepository
 import com.hamdi.carpooling.features.auth.signup.data.RegisterRepositoryImpl
 import com.hamdi.carpooling.features.auth.signup.domain.RegisterRepository
-import com.hamdi.carpooling.features.home.data.HomeRepositoryImpl
-import com.hamdi.carpooling.features.home.domain.HomeRepository
+import com.hamdi.carpooling.features.welcome.data.WelcomeRepositoryImpl
+import com.hamdi.carpooling.features.welcome.domain.WelcomeRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,9 +23,9 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun bindHomeRepository(
-        impl: HomeRepositoryImpl
-    ): HomeRepository
+    abstract fun bindWelcomeRepository(
+        impl: WelcomeRepositoryImpl
+    ): WelcomeRepository
 
     @Binds
     @Singleton

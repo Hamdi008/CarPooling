@@ -2,13 +2,12 @@ package com.hamdi.carpooling.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.hamdi.carpooling.dataBase.remote.UserApi
 import com.hamdi.carpooling.features.auth.logout.data.remote.LogoutApi
 import com.hamdi.carpooling.features.auth.signin.data.AuthInterceptor
 import com.hamdi.carpooling.features.auth.signin.data.remote.AuthApi
 import com.hamdi.carpooling.features.auth.signup.data.remote.RegisterApi
-import com.hamdi.carpooling.features.home.data.remote.HomeApi
+import com.hamdi.carpooling.features.welcome.data.remote.WelcomeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,8 +50,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHomeApi(retrofit: Retrofit): HomeApi {
-        return retrofit.create(HomeApi::class.java)
+    fun provideWelcomeApi(retrofit: Retrofit): WelcomeApi {
+        return retrofit.create(WelcomeApi::class.java)
     }
 
     @Provides
