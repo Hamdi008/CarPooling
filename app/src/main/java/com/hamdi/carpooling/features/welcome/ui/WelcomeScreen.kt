@@ -33,7 +33,7 @@ fun WelcomeScreen(modifier: Modifier, viewModel: WelcomeViewModel = hiltViewMode
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    listOf(Color(0xFF4FACFE), Color(0xFF00F2FE))
+                listOf(Color(0xFF4FACFE), Color(0xFF00F2FE))
                 )
             )
             .padding(24.dp),
@@ -75,5 +75,5 @@ fun WelcomeScreen(modifier: Modifier, viewModel: WelcomeViewModel = hiltViewMode
 @Preview(showBackground = true)
 @Composable
 fun PreviewWelcomeScreen() {
-    WelcomeScreen(modifier = Modifier, viewModel = hiltViewModel())
+    WelcomeScreen(modifier = Modifier)
 }

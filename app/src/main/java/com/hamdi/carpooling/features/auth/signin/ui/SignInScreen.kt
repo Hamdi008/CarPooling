@@ -1,15 +1,34 @@
 package com.hamdi.carpooling.features.auth.signin.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -22,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
+import com.hamdi.carpooling.core.navigation.Routes.HOME
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
 import com.hamdi.carpooling.core.theme.CarPoolingTheme
 import com.hamdi.carpooling.features.auth.signin.presentation.AuthViewModel
@@ -29,16 +49,14 @@ import com.hamdi.carpooling.features.auth.signin.presentation.AuthViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
-    val navController = LocalNavController.current
 
-    // State variables
+    val navController = LocalNavController.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
-    // Gradient background (same as SignUpScreen)
     val gradient = Brush.verticalGradient(
-        colors = listOf(Color(0xFF00C6FB), Color(0xFF005BEA))
+        listOf(Color(0xFF4FACFE), Color(0xFF00F2FE))
     )
 
     Box(
@@ -54,7 +72,6 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp))
             {
-                // Header
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "Welcome Back",
@@ -70,12 +87,10 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
                     )
                 }
 
-                // Form fields
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // Email field
                     OutlinedTextField(
                         value = email,
                         onValueChange = { email = it },
@@ -99,7 +114,6 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
                         }
                     )
 
-                    // Password field
                     OutlinedTextField(
                         value = password,
                         onValueChange = { password = it },
@@ -133,7 +147,6 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
                     )
                 }
 
-                // Buttons
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -144,7 +157,7 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
                                 email = email,
                                 password = password,
                                 onSuccess = {
-                                    //navController.navigate(...)
+                                    navController.navigate(HOME)
                                 },
                                 onError = { error ->
                                 }

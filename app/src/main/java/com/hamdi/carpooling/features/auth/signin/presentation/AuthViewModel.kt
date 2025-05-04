@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hamdi.carpooling.features.auth.signin.data.model.LoginRequest
 import com.hamdi.carpooling.features.auth.signin.domain.AuthRepository
-import com.hamdi.carpooling.features.auth.signup.data.model.RegisterRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

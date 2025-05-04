@@ -7,17 +7,19 @@ import androidx.navigation.compose.composable
 import com.hamdi.carpooling.core.navigation.Routes.HOME
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
+import com.hamdi.carpooling.core.navigation.Routes.WELCOME
 import com.hamdi.carpooling.features.auth.signin.ui.SignInScreen
 import com.hamdi.carpooling.features.auth.signup.ui.SignUpScreen
+import com.hamdi.carpooling.features.home.ui.HomeScreen
 import com.hamdi.carpooling.features.welcome.ui.WelcomeScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier) {
     NavHost(
         navController = LocalNavController.current,
-        startDestination = HOME
+        startDestination = WELCOME
     ) {
-        composable(HOME) {
+        composable(WELCOME) {
             WelcomeScreen(modifier = modifier)
         }
         composable(SIGN_UP) {
@@ -26,12 +28,17 @@ fun AppNavigation(modifier: Modifier) {
         composable(SIGN_IN) {
             SignInScreen()
         }
+        composable(HOME) {
+            HomeScreen(modifier = modifier)
+        }
     }
 }
 
 object Routes {
+    const val WELCOME = "welcome"
     const val HOME = "home"
     const val SIGN_UP = "sign_up"
     const val SIGN_IN = "sign_in"
-
+    const val PROFILE = "profile"
+    const val SETTINGS = "settings"
 }

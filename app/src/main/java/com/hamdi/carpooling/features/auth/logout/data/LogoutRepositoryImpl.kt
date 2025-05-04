@@ -1,27 +1,23 @@
 package com.hamdi.carpooling.features.auth.logout.data
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 import com.hamdi.carpooling.features.auth.logout.data.model.LogoutResponse
 import com.hamdi.carpooling.features.auth.logout.data.remote.LogoutApi
 import com.hamdi.carpooling.features.auth.logout.domain.LogoutRepository
-import com.hamdi.carpooling.features.auth.signin.data.remote.AuthApi
-import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.ResponseBody
 import retrofit2.Response
 import javax.inject.Inject
-import androidx.core.content.edit
 
 class LogoutRepositoryImpl @Inject constructor(
     private val logoutApi: LogoutApi,
     private val sharedPreferences: SharedPreferences,
-    @ApplicationContext private val context: Context
 ) : LogoutRepository {
     override suspend fun logoutUser(): Response<LogoutResponse> {
         val jwt = sharedPreferences.getString("jwt_token", null)
 
-        var response: Response<LogoutResponse>
+        val response: Response<LogoutResponse>
 
         if (jwt == null) {
             response = Response.error(401, ResponseBody.create(null, "Unauthorized: No JWT token"))
@@ -31,7 +27,7 @@ class LogoutRepositoryImpl @Inject constructor(
                 val apiResponse = logoutApi.logout("Bearer $jwt")
 
                 if (apiResponse.isSuccessful) {
-                    sharedPreferences.edit() { remove("jwt_token") }
+                    sharedPreferences.edit{ remove("jwt_token") }
                     Log.d("Logout", "Success: ${apiResponse.body()?.message}")
                 } else {
                     Log.e("Logout", "Failed: ${apiResponse.code()}")

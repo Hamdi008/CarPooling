@@ -39,9 +39,8 @@ fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel()) {
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
-    // Gradient background
     val gradient = Brush.verticalGradient(
-        colors = listOf(Color(0xFF00C6FB), Color(0xFF005BEA))
+        listOf(Color(0xFF4FACFE), Color(0xFF00F2FE))
     )
 
     Box(
