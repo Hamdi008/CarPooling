@@ -15,6 +15,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,14 +26,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hamdi.carpooling.core.navigation.AppNavigation
+import com.hamdi.carpooling.core.navigation.LocalMainViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.LocalSnackbarHostState
 import com.hamdi.carpooling.core.navigation.Routes.HOME
 import com.hamdi.carpooling.core.navigation.Routes.PROFILE
 import com.hamdi.carpooling.core.navigation.Routes.SETTINGS
+import com.hamdi.carpooling.core.presentation.MainViewModel
 import com.hamdi.carpooling.core.theme.CarPoolingTheme
 import com.hamdi.carpooling.features.home.ui.FooterSection
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,9 +50,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            val snackbarHostState = remember { SnackbarHostState() }
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
+            val snackbarHostState = remember { SnackbarHostState() }
+            val mainViewModel: MainViewModel = hiltViewModel()
 
             // List of screens that should display the footer
             val showFooter = currentRoute in listOf(HOME, PROFILE, SETTINGS)
@@ -56,7 +61,8 @@ class MainActivity : ComponentActivity() {
             CarPoolingTheme {
                 CompositionLocalProvider(
                     LocalNavController provides navController,
-                    LocalSnackbarHostState provides snackbarHostState
+                    LocalSnackbarHostState provides snackbarHostState,
+                    LocalMainViewModel provides mainViewModel
                 ) {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
@@ -66,6 +72,14 @@ class MainActivity : ComponentActivity() {
                         },
                     ) { innerPadding ->
                         AppNavigation(Modifier.padding(innerPadding))
+                    }
+
+                    val messageToShow = LocalMainViewModel.current.snackbarMessage.value
+                    LaunchedEffect(messageToShow) {
+                        messageToShow?.let {
+                            snackbarHostState.showSnackbar(it)
+                            mainViewModel.clearSnackbarMessage()
+                        }
                     }
                     Box(
                         modifier = Modifier

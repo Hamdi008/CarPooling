@@ -49,8 +49,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hamdi.carpooling.core.navigation.LocalMainViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
-import com.hamdi.carpooling.core.navigation.LocalSnackbarHostState
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.features.auth.logout.presentation.LogoutViewModel
 import kotlinx.coroutines.launch
@@ -62,7 +62,7 @@ fun HomeScreen(
     logoutViewModel: LogoutViewModel = hiltViewModel()
 ) {
     val navController = LocalNavController.current
-    val snackbarHostState = LocalSnackbarHostState.current
+    val mainViewModel = LocalMainViewModel.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -177,13 +177,13 @@ fun HomeScreen(
                                 logoutViewModel.logoutUser(
                                     onSuccess = {
                                         scope.launch {
-                                            snackbarHostState.showSnackbar("Logout Success!")
+                                            navController.navigate(SIGN_IN)
+                                            mainViewModel.showSnackbar("Logout Success!")
                                         }
-                                        navController.navigate(SIGN_IN)
                                     },
                                     onError = {
                                         scope.launch {
-                                            snackbarHostState.showSnackbar("Logout Failed!")
+                                            mainViewModel.showSnackbar("Logout Failed!")
                                         }
                                     })
 
