@@ -100,13 +100,11 @@ class MainActivity : ComponentActivity() {
                                 contentColor = Color.White,
                                 actionContentColor = Color(0xFF00E5FF),
                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                                dismissActionContentColor = Color.Red,
-                                actionOnNewLine = false,
                                 dismissAction = {
                                     Icon(
                                         imageVector = Icons.Default.Close,
                                         contentDescription = "Dismiss",
-                                        tint = Color.Red,
+                                        tint =  Color(0xFF800020),
                                         modifier = Modifier
                                             .padding(end = 8.dp)
                                             .clickable {
@@ -114,7 +112,6 @@ class MainActivity : ComponentActivity() {
                                             }
                                     )
                                 },
-
                             ) {
                                 Text(
                                     modifier = Modifier.fillMaxWidth(),
