@@ -4,11 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -95,7 +99,22 @@ class MainActivity : ComponentActivity() {
                                 containerColor = Color(0xFF005F8F).copy(alpha = 0.9f),
                                 contentColor = Color.White,
                                 actionContentColor = Color(0xFF00E5FF),
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+                                dismissActionContentColor = Color.Red,
+                                actionOnNewLine = false,
+                                dismissAction = {
+                                    Icon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = "Dismiss",
+                                        tint = Color.Red,
+                                        modifier = Modifier
+                                            .padding(end = 8.dp)
+                                            .clickable {
+                                                data.dismiss()
+                                            }
+                                    )
+                                },
+
                             ) {
                                 Text(
                                     modifier = Modifier.fillMaxWidth(),
