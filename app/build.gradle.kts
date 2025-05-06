@@ -15,9 +15,8 @@ android {
         applicationId = "com.hamdi.carpooling"
         minSdk = 29
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
+        versionName = getVersionName("version.txt")
+        versionCode = getVersionCode(versionName as String)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -49,12 +48,68 @@ android {
             pickFirsts += "META-INF/gradle/incremental.annotation.processors"
         }
     }
+
+
+    applicationVariants.all {
+        outputs.forEach { output ->
+            (output as? com.android.build.gradle.internal.api.BaseVariantOutputImpl)?.apply {
+                //outputFileName = "Carpooling-${buildType.name}-$versionName.apk"
+                outputFileName = if (buildType.name == "debug")
+                    "${rootProject.name}-${buildType.name}-$versionName.apk"
+                else
+                    "${rootProject.name}-$versionName.apk"
+            }
+        }
+    }
+
+
+}
+
+fun getVersionName(versionFile: String): String {
+    var year = "XX"
+    var releaseNumber = "XX"
+    var patch = "XX"
+    var build = "XXXX"
+    File(versionFile).forEachLine {
+        when {
+            it.startsWith("VERSION_YEAR=") -> year = it.substringAfter("=").padStart(2, '0')
+            it.startsWith("VERSION_RELEASE_NUM=") -> releaseNumber = it.substringAfter("=").padStart(2, '0')
+            it.startsWith("VERSION_PATCH=") -> patch = it.substringAfter("=").padStart(2, '0')
+            it.startsWith("VERSION_BUILD=") -> build = it.substringAfter("=").padStart(4, '0')
+        }
+    }
+    return "$year.$releaseNumber.$patch-$build"
+}
+
+
+fun getVersionCode(version: String): Int {
+    return getVersions(version)?.let { (year, releaseNumber, patch, build) ->
+        val code = (year - 25) * 10000000 + (releaseNumber) * 100000 + (patch) * 1000 + (build).rem(1000)
+        if (code == 0) 1 else code
+    }
+        ?: throw GradleException("version doesn't respect the version rule 'year.releaseNumber.patch-buildNumber': $version")
+}
+
+fun getVersions(version: String?): Array<Int>? {
+    return version?.let {
+        "(\\d{2})\\.(\\d{2})\\.(\\d{2})\\-(\\d{4})".toRegex().matchEntire(version)?.let { matchEnt ->
+
+            matchEnt.let {
+                val year = matchEnt.groups[1]?.value?.toInt() ?: 22
+                val releaseNumber = matchEnt.groups[2]?.value?.toInt() ?: 0
+                val patch = matchEnt.groups[3]?.value?.toInt() ?: 0
+                val build = matchEnt.groups[4]?.value?.toInt() ?: 0
+
+                arrayOf(year, releaseNumber, patch, build)
+            }
+        }
+    }
 }
 
 dependencies {
 
     // Jetpack Compose Navigation
-    implementation ("androidx.navigation:navigation-compose:2.8.9")
+    implementation("androidx.navigation:navigation-compose:2.8.9")
     implementation("androidx.compose.material:material-icons-extended:1.6.7")
 
     // Retrofit
