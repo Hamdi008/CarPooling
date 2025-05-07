@@ -1,16 +1,43 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.hamdi.carpooling.features.auth.signup.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -25,17 +52,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.core.theme.CarPoolingTheme
-import com.hamdi.carpooling.dataBase.roomDB.UserViewModel
 import com.hamdi.carpooling.features.auth.signup.presentation.RegisterViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel()) {
     val navController = LocalNavController.current
+    val countryCodes = listOf("+216", "+1", "+33", "+44", "+91")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOptionText by remember { mutableStateOf(countryCodes[0]) }
 
     // State variables
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var fullPhoneNumber by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -127,6 +158,79 @@ fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel()) {
                     }
                 )
 
+
+                // Phone field with country code selection
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    ExposedDropdownMenuBox(
+                        expanded = expanded,
+                        onExpandedChange = {
+                            expanded = !expanded
+                        },
+                        modifier = Modifier.weight(1f)
+                            .fillMaxHeight()
+                    ) {
+                        OutlinedTextField(
+                            modifier = Modifier.menuAnchor()
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
+                            value = selectedOptionText,
+                            onValueChange = {},
+                            label = { Text("Code") },
+                            readOnly = true,
+                            singleLine = true,
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                containerColor = Color.Transparent,
+                                cursorColor = Color.White,
+                                focusedBorderColor = Color.White.copy(alpha = 0.8f),
+                                unfocusedBorderColor = Color.White.copy(alpha = 0.4f),
+                            )
+                        )
+
+                        ExposedDropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            countryCodes.forEach { selectionOption ->
+                                DropdownMenuItem(
+                                    text = { Text(selectionOption) },
+                                    onClick = {
+                                        selectedOptionText = selectionOption
+                                        fullPhoneNumber = selectedOptionText+phone
+                                        expanded = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+
+
+                    // Phone number input
+                    OutlinedTextField(
+                        value = phone,
+                        onValueChange = { phone = it
+                                        fullPhoneNumber = selectedOptionText+phone},
+                        label = { Text("Phone Number") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(2f),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            containerColor = Color.Transparent,
+                            cursorColor = Color.White,
+                            focusedBorderColor = Color.White.copy(alpha = 0.8f),
+                            unfocusedBorderColor = Color.White.copy(alpha = 0.4f),
+                            focusedLabelColor = Color.White,
+                            unfocusedLabelColor = Color.White.copy(alpha = 0.6f)
+                        )
+                    )
+                }
+
                 // Password field
                 OutlinedTextField(
                     value = password,
@@ -205,7 +309,7 @@ fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel()) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun PreviewSignUp() {
     CarPoolingTheme{
