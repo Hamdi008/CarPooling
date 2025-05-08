@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface WelcomeApi {
 
-    @GET("/")
+    @GET("api/welcome")
     suspend fun getWelcomeData(): Response<WelcomeResponse>
 }

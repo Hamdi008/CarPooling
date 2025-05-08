@@ -7,6 +7,6 @@ import retrofit2.http.POST
 
 interface LogoutApi {
 
-    @POST("logout")
+    @POST("api/logout")
     suspend fun logout(@Header("Authorization") token: String): Response<LogoutResponse>
 }

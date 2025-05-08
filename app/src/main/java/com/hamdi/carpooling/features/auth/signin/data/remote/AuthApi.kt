@@ -11,9 +11,9 @@ import retrofit2.http.POST
 
 interface AuthApi {
 
-    @POST("login")
+    @POST("api/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    @GET("profile")
+    @GET("api/profile")
     suspend fun getProfile(@Header("Authorization") token: String): Response<ProfileResponse>
 }
