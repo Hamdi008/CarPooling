@@ -2,12 +2,16 @@ package com.hamdi.carpooling.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.hamdi.carpooling.core.navigation.Routes.HOME
+import com.hamdi.carpooling.core.navigation.Routes.PIN
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
 import com.hamdi.carpooling.core.navigation.Routes.WELCOME
+import com.hamdi.carpooling.features.auth.pin.ui.PinScreen
 import com.hamdi.carpooling.features.auth.signin.ui.SignInScreen
 import com.hamdi.carpooling.features.auth.signup.ui.SignUpScreen
 import com.hamdi.carpooling.features.home.ui.HomeScreen
@@ -31,6 +35,13 @@ fun AppNavigation(modifier: Modifier) {
         composable(HOME) {
             HomeScreen(modifier = modifier)
         }
+
+        composable(PIN+"/{phoneNumber}",
+            arguments = listOf(navArgument("phoneNumber") { type = NavType.StringType })
+            ) { backStackEntry ->
+            val number = backStackEntry.arguments?.getString("phoneNumber").toString()
+            PinScreen(modifier = modifier, phoneNumber = number)
+        }
     }
 }
 
@@ -41,4 +52,5 @@ object Routes {
     const val SIGN_IN = "sign_in"
     const val PROFILE = "profile"
     const val SETTINGS = "settings"
+    const val PIN = "pin"
 }

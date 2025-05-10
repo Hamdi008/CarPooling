@@ -1,6 +1,5 @@
 package com.hamdi.carpooling.features.auth.signup.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hamdi.carpooling.features.auth.signup.data.model.RegisterRequest

@@ -28,19 +28,15 @@ class AuthViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val getProfileResponse = authRepository.getProfile()
                     if (getProfileResponse.isSuccessful) {
-                        Log.d("HEL:","Login Success")
                         onSuccess()
                     } else {
-                        Log.d("HEL:","Login Failed}")
                         onError(getProfileResponse.message())
                     }
                 } else {
                     val errorMessage = response.errorBody()?.string() ?: "Unknown error"
-                    Log.e("HEL:", "Login Failed: $errorMessage")
                     onError(errorMessage)
                 }
             } catch (e: Exception) {
-                Log.e("HEL:", "Exception: ${e.message}")
                 onError(e.message ?: "Unexpected error")
             }
         }

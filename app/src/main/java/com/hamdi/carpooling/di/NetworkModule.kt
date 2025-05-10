@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.hamdi.carpooling.dataBase.remote.UserApi
 import com.hamdi.carpooling.features.auth.logout.data.remote.LogoutApi
+import com.hamdi.carpooling.features.auth.pin.data.remote.PinApi
 import com.hamdi.carpooling.features.auth.signin.data.AuthInterceptor
 import com.hamdi.carpooling.features.auth.signin.data.remote.AuthApi
 import com.hamdi.carpooling.features.auth.signup.data.remote.RegisterApi
@@ -42,7 +43,7 @@ object NetworkModule {
     fun provideRetrofit(client: OkHttpClient): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl("http://192.168.254.190:9000/") // 🛠 Replace with your base URL
+            .baseUrl("http://192.168.74.190:9000/") // 🛠 Replace with your base URL
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -76,5 +77,11 @@ object NetworkModule {
     @Singleton
     fun provideLogoutApi(retrofit: Retrofit): LogoutApi {
         return retrofit.create(LogoutApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePinApi(retrofit: Retrofit): PinApi {
+        return retrofit.create(PinApi::class.java)
     }
 }
