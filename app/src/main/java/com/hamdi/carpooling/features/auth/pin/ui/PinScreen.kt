@@ -37,12 +37,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hamdi.carpooling.core.theme.CarPoolingTheme
 import com.hamdi.carpooling.features.auth.pin.presentation.PinViewModel
+import com.hamdi.carpooling.utils.ResultState
 import kotlinx.coroutines.delay
 
 @Composable
 fun PinScreen(modifier: Modifier = Modifier, phoneNumber: String, viewModel: PinViewModel = hiltViewModel()) {
     val pinLength = 6
     var pin by remember { mutableStateOf("") }
+    // Collect states from ViewModel
+    val sendPinState by viewModel.sendPinState
+    val verifyPinState by viewModel.verifyPinState
 
     val gradient = Brush.verticalGradient(
         colors = listOf(Color(0xFF4FACFE), Color(0xFF00F2FE))
@@ -62,6 +66,36 @@ fun PinScreen(modifier: Modifier = Modifier, phoneNumber: String, viewModel: Pin
             }
             isResendEnabled = true
             resendRequested = false
+        }
+    }
+
+    LaunchedEffect(sendPinState) {
+        when (sendPinState) {
+            is ResultState.Success -> {
+                // PIN resend success - maybe show confirmation
+            }
+            is ResultState.Error -> {
+                // Show error message to user
+            }
+            ResultState.Loading -> {
+                // Could show loading indicator if you want
+            }
+            else -> {}
+        }
+    }
+
+    LaunchedEffect(verifyPinState) {
+        when (verifyPinState) {
+            is ResultState.Success -> {
+                // PIN verified successfully - navigate forward
+            }
+            is ResultState.Error -> {
+                // Show error message to user
+            }
+            ResultState.Loading -> {
+                // Show loading if desired
+            }
+            else -> {}
         }
     }
 
