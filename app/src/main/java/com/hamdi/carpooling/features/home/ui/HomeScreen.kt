@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hamdi.carpooling.core.navigation.LocalMainViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
+import com.hamdi.carpooling.core.navigation.Routes.CONTACT
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.features.auth.logout.presentation.LogoutViewModel
 import kotlinx.coroutines.launch
@@ -102,7 +103,7 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                         .clickable {
-                            //onContactClick()
+                            navController.navigate(CONTACT)
                             scope.launch { drawerState.close() }
                         },
                     horizontalArrangement = Arrangement.Start,
@@ -114,7 +115,7 @@ fun HomeScreen(
                         modifier = Modifier.padding(end = 8.dp)
                     )
                     Text(
-                        text = "Contact",
+                        text = "Contact Us",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
                     )

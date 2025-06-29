@@ -37,6 +37,7 @@ import com.hamdi.carpooling.core.navigation.AppNavigation
 import com.hamdi.carpooling.core.navigation.LocalMainViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.LocalSnackbarHostState
+import com.hamdi.carpooling.core.navigation.Routes.CONTACT
 import com.hamdi.carpooling.core.navigation.Routes.HOME
 import com.hamdi.carpooling.core.navigation.Routes.PROFILE
 import com.hamdi.carpooling.core.navigation.Routes.SETTINGS
@@ -60,7 +61,7 @@ class MainActivity : ComponentActivity() {
             val mainViewModel: MainViewModel = hiltViewModel()
 
             // List of screens that should display the footer
-            val showFooter = currentRoute in listOf(HOME, PROFILE, SETTINGS)
+            val showFooter = currentRoute in listOf(HOME, PROFILE, SETTINGS, CONTACT)
 
             CarPoolingTheme {
                 CompositionLocalProvider(
