@@ -25,8 +25,13 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            buildConfigField("String", "API_BASE_URL", "\"https://api.production.com/\"")
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        debug {
+            buildConfigField("String", "API_BASE_URL", "\"http://192.168.83.190:9000/\"")
+            isMinifyEnabled = false
         }
     }
     compileOptions {
@@ -38,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"

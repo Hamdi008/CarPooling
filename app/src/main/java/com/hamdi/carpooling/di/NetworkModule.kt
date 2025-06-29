@@ -18,6 +18,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
+import com.hamdi.carpooling.BuildConfig
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -43,7 +44,7 @@ object NetworkModule {
     fun provideRetrofit(client: OkHttpClient): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl("http://192.168.74.190:9000/") // 🛠 Replace with your base URL
+            .baseUrl(BuildConfig.API_BASE_URL) // 🛠 Replace with your base URL
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
