@@ -19,7 +19,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.ContactMail
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -55,6 +57,11 @@ import androidx.navigation.compose.rememberNavController
 import com.hamdi.carpooling.core.navigation.LocalMainViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.CONTACT
+import com.hamdi.carpooling.core.navigation.Routes.DASHBOARD
+import com.hamdi.carpooling.core.navigation.Routes.FAVORITES
+import com.hamdi.carpooling.core.navigation.Routes.NOTIFICATIONS
+import com.hamdi.carpooling.core.navigation.Routes.PROFILE
+import com.hamdi.carpooling.core.navigation.Routes.SETTINGS
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
 import com.hamdi.carpooling.core.presentation.MainViewModel
 import com.hamdi.carpooling.features.auth.logout.presentation.LogoutViewModel
@@ -79,12 +86,84 @@ fun HomeScreen(
                 modifier = Modifier.width(200.dp)
             ) {
                 Spacer(modifier = Modifier.height(24.dp))
+                // Dashboard
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                         .clickable {
-                            //onProfileClick()
+                            navController.navigate(DASHBOARD)
+                            scope.launch { drawerState.close() }
+                        },
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Menu, // use your preferred icon
+                        contentDescription = "Dashboard Icon",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = "Dashboard",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+
+                // Notifications
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable {
+                            navController.navigate(NOTIFICATIONS)
+                            scope.launch { drawerState.close() }
+                        },
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Notifications, // add this import if needed
+                        contentDescription = "Notifications Icon",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = "Notifications",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+
+                // Favorites
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable {
+                            navController.navigate(FAVORITES)
+                            scope.launch { drawerState.close() }
+                        },
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Favorite, // add import if needed
+                        contentDescription = "Favorites Icon",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = "Favorites",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable {
+                            navController.navigate(PROFILE)
                             scope.launch { drawerState.close() }
                         },
                     horizontalArrangement = Arrangement.Start,
@@ -130,7 +209,7 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                         .clickable {
-                            //onSettingsClick()
+                            navController.navigate(SETTINGS)
                             scope.launch { drawerState.close() }
                         },
                     horizontalArrangement = Arrangement.Start,
@@ -234,13 +313,13 @@ fun HomeScreen(
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Transparent
+                        containerColor = Color(0xFF007AFF)
                     )
                 )
             },
             containerColor = Color.Transparent
         ) { paddingValues ->
-            Box(
+            Column(
                 modifier = modifier
                     .fillMaxSize()
                     .background(
@@ -249,51 +328,61 @@ fun HomeScreen(
                         )
                     )
                     .padding(paddingValues)
-                    .padding(24.dp)
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
+
                 Column(
-                    modifier = Modifier.align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     Text(
-                        text = "Ready to ride?",
-                        fontSize = 24.sp,
+                        text = "Hello Hamdi 👋",
+                        fontSize = 26.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
 
+                    Text(
+                        text = "What would you like to do today?",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White.copy(alpha = 0.85f)
+                    )
+
                     Button(
-                        onClick = {},
+                        onClick = { /* TODO */ },
+                        modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                     ) {
-                        Text(
-                            "Offer a Ride",
-                            color = Color(0xFF007AFF),
-                            fontWeight = FontWeight.Medium
-                        )
+                        Text("Offer a Ride", color = Color(0xFF007AFF), fontWeight = FontWeight.Bold)
                     }
 
                     Button(
-                        onClick = {},
+                        onClick = { /* TODO */ },
+                        modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                     ) {
-                        Text(
-                            "Find a Ride",
-                            color = Color(0xFF007AFF),
-                            fontWeight = FontWeight.Medium
-                        )
+                        Text("Find a Ride", color = Color(0xFF007AFF), fontWeight = FontWeight.Bold)
                     }
 
                     Button(
-                        onClick = {},
+                        onClick = { /* TODO */ },
+                        modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                     ) {
-                        Text("My Rides", color = Color(0xFF007AFF), fontWeight = FontWeight.Medium)
+                        Text("My Rides", color = Color(0xFF007AFF), fontWeight = FontWeight.Bold)
                     }
+
+                    Text(
+                        text = "Upcoming Ride: No ride scheduled.",
+                        fontSize = 14.sp,
+                        color = Color.White,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
                 }
             }
         }
+
     }
 }
 
