@@ -188,6 +188,7 @@ fun ContactScreen(modifier: Modifier = Modifier,) {
 @Composable
 fun ContactScreenPreview() {
     val fakeNavController = rememberNavController()
+
     CompositionLocalProvider(LocalNavController provides fakeNavController) {
         ContactScreen()
     }

@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,16 +50,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.PIN
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
-import com.hamdi.carpooling.core.theme.CarPoolingTheme
 import com.hamdi.carpooling.features.auth.pin.presentation.PinViewModel
 import com.hamdi.carpooling.features.auth.signup.presentation.RegisterViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel(), pinViewModel: PinViewModel = hiltViewModel()) {
+fun SignUpScreen(viewModel: RegisterViewModel? = hiltViewModel(), pinViewModel: PinViewModel? = hiltViewModel()) {
     val navController = LocalNavController.current
     val countryCodes = listOf("+216", "+1", "+33", "+44", "+91")
     var expanded by remember { mutableStateOf(false) }
@@ -275,13 +276,13 @@ fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel(), pinViewModel: P
             ) {
                 Button(
                     onClick = {
-                        viewModel.registerUser(
+                        viewModel?.registerUser(
                             name = name,
                             email = email,
                             password = password,
                             onSuccess = {
                                 navController.navigate(PIN+"/$fullPhoneNumber")
-                                pinViewModel.sendPin(phoneNumber = fullPhoneNumber)
+                                pinViewModel?.sendPin(phoneNumber = fullPhoneNumber)
                             },
                             onError = { error ->
                             }
@@ -315,7 +316,9 @@ fun SignUpScreen(viewModel: RegisterViewModel = hiltViewModel(), pinViewModel: P
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignUp() {
-    CarPoolingTheme{
-        SignUpScreen()
+    val fakeNavController = rememberNavController()
+
+    CompositionLocalProvider(LocalNavController provides fakeNavController) {
+        SignUpScreen(viewModel = null, pinViewModel= null)
     }
 }

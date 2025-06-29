@@ -41,12 +41,12 @@ import com.hamdi.carpooling.utils.ResultState
 import kotlinx.coroutines.delay
 
 @Composable
-fun PinScreen(modifier: Modifier = Modifier, phoneNumber: String, viewModel: PinViewModel = hiltViewModel()) {
+fun PinScreen(modifier: Modifier = Modifier, phoneNumber: String, viewModel: PinViewModel? = hiltViewModel()) {
     val pinLength = 6
     var pin by remember { mutableStateOf("") }
     // Collect states from ViewModel
-    val sendPinState by viewModel.sendPinState
-    val verifyPinState by viewModel.verifyPinState
+    val sendPinState = viewModel?.sendPinState?.value
+    val verifyPinState = viewModel?.verifyPinState?.value
 
     val gradient = Brush.verticalGradient(
         colors = listOf(Color(0xFF4FACFE), Color(0xFF00F2FE))
@@ -139,7 +139,7 @@ fun PinScreen(modifier: Modifier = Modifier, phoneNumber: String, viewModel: Pin
 
             Button(
                 onClick = {
-                    if (pin.length == pinLength) viewModel.verifyPin(phoneNumber, pin)
+                    if (pin.length == pinLength) viewModel?.verifyPin(phoneNumber, pin)
                 },
                 enabled = pin.length == pinLength,
                 modifier = Modifier
@@ -182,7 +182,5 @@ fun PinScreen(modifier: Modifier = Modifier, phoneNumber: String, viewModel: Pin
 @Preview(showBackground = true)
 @Composable
 fun PreviewPinScreen() {
-    CarPoolingTheme {
-        PinScreen(phoneNumber = "")
-    }
+    PinScreen(phoneNumber = "", viewModel = null)
 }

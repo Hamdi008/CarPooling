@@ -10,6 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -19,14 +20,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
 import com.hamdi.carpooling.features.welcome.presentation.WelcomeViewModel
 
 @Composable
-fun WelcomeScreen(modifier: Modifier, viewModel: WelcomeViewModel = hiltViewModel()) {
+fun WelcomeScreen(modifier: Modifier, viewModel: WelcomeViewModel? = hiltViewModel()) {
     val navController = LocalNavController.current
-    val msg = viewModel.welcomeMessage.value
+    val msg = viewModel?.welcomeMessage?.value
 
     Box(
         modifier = modifier
@@ -50,11 +52,13 @@ fun WelcomeScreen(modifier: Modifier, viewModel: WelcomeViewModel = hiltViewMode
                 color = Color.White
             )
 
-            Text(
-                text = msg,
-                fontSize = 18.sp,
-                color = Color.White.copy(alpha = 0.9f)
-            )
+            msg?.let {
+                Text(
+                    text = it,
+                    fontSize = 18.sp,
+                    color = Color.White.copy(alpha = 0.9f)
+                )
+            }
 
             Button(
                 onClick = {
@@ -75,5 +79,9 @@ fun WelcomeScreen(modifier: Modifier, viewModel: WelcomeViewModel = hiltViewMode
 @Preview(showBackground = true)
 @Composable
 fun PreviewWelcomeScreen() {
-    WelcomeScreen(modifier = Modifier)
+    val fakeNavController = rememberNavController()
+
+    CompositionLocalProvider(LocalNavController provides fakeNavController) {
+        WelcomeScreen(modifier = Modifier, viewModel = null)
+    }
 }

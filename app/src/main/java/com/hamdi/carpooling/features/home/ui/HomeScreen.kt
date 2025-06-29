@@ -39,6 +39,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,10 +51,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.hamdi.carpooling.core.navigation.LocalMainViewModel
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.CONTACT
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_IN
+import com.hamdi.carpooling.core.presentation.MainViewModel
 import com.hamdi.carpooling.features.auth.logout.presentation.LogoutViewModel
 import kotlinx.coroutines.launch
 
@@ -60,7 +64,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    logoutViewModel: LogoutViewModel = hiltViewModel()
+    logoutViewModel: LogoutViewModel? = hiltViewModel()
 ) {
     val navController = LocalNavController.current
     val mainViewModel = LocalMainViewModel.current
@@ -175,7 +179,7 @@ fun HomeScreen(
                         .padding(16.dp)
                         .clickable {
                             scope.launch {
-                                logoutViewModel.logoutUser(
+                                logoutViewModel?.logoutUser(
                                     onSuccess = {
                                         scope.launch {
                                             navController.navigate(SIGN_IN)
@@ -330,5 +334,13 @@ fun FooterSection(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = false, showBackground = false)
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen()
+    val fakeNavController = rememberNavController()
+    val fakeMainViewModel = remember { MainViewModel() }
+
+    CompositionLocalProvider(
+        LocalNavController provides fakeNavController,
+        LocalMainViewModel provides fakeMainViewModel
+    ) {
+        HomeScreen(logoutViewModel = null)
+    }
 }

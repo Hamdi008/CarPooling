@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,15 +41,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.HOME
 import com.hamdi.carpooling.core.navigation.Routes.SIGN_UP
-import com.hamdi.carpooling.core.theme.CarPoolingTheme
 import com.hamdi.carpooling.features.auth.signin.presentation.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
+fun SignInScreen(viewModel: AuthViewModel? = hiltViewModel() ) {
 
     val navController = LocalNavController.current
     var email by remember { mutableStateOf("") }
@@ -153,7 +154,7 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
                 ) {
                     Button(
                         onClick = {
-                            viewModel.login(
+                            viewModel?.login(
                                 email = email,
                                 password = password,
                                 onSuccess = {
@@ -191,7 +192,9 @@ fun SignInScreen(viewModel: AuthViewModel = hiltViewModel() ) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignIn() {
-    CarPoolingTheme {
-        SignInScreen()
+    val fakeNavController = rememberNavController()
+
+    CompositionLocalProvider(LocalNavController provides fakeNavController) {
+        SignInScreen(viewModel = null)
     }
 }
