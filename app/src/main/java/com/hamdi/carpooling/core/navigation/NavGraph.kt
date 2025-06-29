@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.hamdi.carpooling.core.navigation.Routes.CONTACT
 import com.hamdi.carpooling.core.navigation.Routes.DASHBOARD
 import com.hamdi.carpooling.core.navigation.Routes.FAVORITES
+import com.hamdi.carpooling.core.navigation.Routes.HELP
 import com.hamdi.carpooling.core.navigation.Routes.HOME
 import com.hamdi.carpooling.core.navigation.Routes.NOTIFICATIONS
 import com.hamdi.carpooling.core.navigation.Routes.PIN
@@ -24,6 +25,7 @@ import com.hamdi.carpooling.features.contact.ui.ContactScreen
 import com.hamdi.carpooling.features.dashboard.ui.DashboardCard
 import com.hamdi.carpooling.features.dashboard.ui.DashboardScreen
 import com.hamdi.carpooling.features.favorites.ui.FavoritesScreen
+import com.hamdi.carpooling.features.help.ui.HelpScreen
 import com.hamdi.carpooling.features.home.ui.HomeScreen
 import com.hamdi.carpooling.features.notifications.ui.NotificationsScreen
 import com.hamdi.carpooling.features.profile.ui.ProfileScreen
@@ -79,6 +81,10 @@ fun AppNavigation(modifier: Modifier) {
         composable(SETTINGS) {
             SettingsScreen( modifier = modifier)
         }
+
+        composable(HELP) {
+            HelpScreen( modifier = modifier)
+        }
     }
 }
 
@@ -94,4 +100,5 @@ object Routes {
     const val DASHBOARD = "dashboard"
     const val NOTIFICATIONS = "Notifications"
     const val FAVORITES = "Favorites"
+    const val HELP = "help"
 }

@@ -40,6 +40,7 @@ import com.hamdi.carpooling.core.navigation.LocalSnackbarHostState
 import com.hamdi.carpooling.core.navigation.Routes.CONTACT
 import com.hamdi.carpooling.core.navigation.Routes.DASHBOARD
 import com.hamdi.carpooling.core.navigation.Routes.FAVORITES
+import com.hamdi.carpooling.core.navigation.Routes.HELP
 import com.hamdi.carpooling.core.navigation.Routes.HOME
 import com.hamdi.carpooling.core.navigation.Routes.NOTIFICATIONS
 import com.hamdi.carpooling.core.navigation.Routes.PROFILE
@@ -71,7 +72,8 @@ class MainActivity : ComponentActivity() {
                 CONTACT,
                 DASHBOARD,
                 NOTIFICATIONS,
-                FAVORITES
+                FAVORITES,
+                HELP
             )
 
             CarPoolingTheme {

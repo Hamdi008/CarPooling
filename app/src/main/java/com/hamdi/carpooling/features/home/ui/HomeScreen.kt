@@ -59,6 +59,7 @@ import com.hamdi.carpooling.core.navigation.LocalNavController
 import com.hamdi.carpooling.core.navigation.Routes.CONTACT
 import com.hamdi.carpooling.core.navigation.Routes.DASHBOARD
 import com.hamdi.carpooling.core.navigation.Routes.FAVORITES
+import com.hamdi.carpooling.core.navigation.Routes.HELP
 import com.hamdi.carpooling.core.navigation.Routes.NOTIFICATIONS
 import com.hamdi.carpooling.core.navigation.Routes.PROFILE
 import com.hamdi.carpooling.core.navigation.Routes.SETTINGS
@@ -232,7 +233,7 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                         .clickable {
-                            //onHelpClick()
+                            navController.navigate(HELP)
                             scope.launch { drawerState.close() }
                         },
                     horizontalArrangement = Arrangement.Start,
